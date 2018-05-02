@@ -7,9 +7,9 @@
     vars:
       instance_type: t2.micro
       security_group: ansible-k8s
-      image: ami-1690b173
+      image: ami-a52a34dc
       keypair: cpenhale
-      region: us-east-1
+      region: us-west-2
       count: 1
 
     tasks:
