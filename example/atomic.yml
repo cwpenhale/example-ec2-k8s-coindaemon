@@ -9,7 +9,7 @@
       security_group: ansible-k8s
       image: ami-1690b173
       keypair: cpenhale
-      region: us-west-2
+      region: us-east-1
       count: 1
 
     tasks:
