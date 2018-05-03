@@ -54,7 +54,7 @@
                       dest="./hosts" 
                       regexp={{ item.public_ip }} 
                       insertafter="[k8s]" line={{ item.public_ip }}
-        with_items: {{ ec2.instances }}
+        with_items: "{{ ec2.instances }}"
 
 
       - name: Wait for SSH to come up
