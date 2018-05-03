@@ -49,10 +49,6 @@
                       count={{ count }}
         register: ec2
         
-      - debug: 
-          msg: "{{ item }}"
-        with_items: "{{ ec2.instances }}"
-
       - name: Add the newly created EC2 instance(s) to the local host group (located inside the directory)
         local_action: lineinfile 
                       dest="./hosts" 
@@ -66,11 +62,11 @@
                       host={{ item.public_ip }} 
                       port=22 
                       state=started
-        with_items: ec2.instances
+        with_items: "{{ ec2.instances }}"
 
       - name: Add tag to Instance(s)
         local_action: ec2_tag resource={{ item.id }} region={{ region }} state=present
-        with_items: ec2.instances
+        with_items: "{{ ec2.instances }}"
         args:
           tags:
             Name: k8s
