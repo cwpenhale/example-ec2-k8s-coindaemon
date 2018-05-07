@@ -49,11 +49,10 @@
         tags:
           - source
           
-      - name: docker up
-        become: yes
+      - name: Start service docker, if not running
         service:
           name: docker
-          status: started
+          state: started
         tags:
           - credentials
   
