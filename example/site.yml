@@ -251,7 +251,7 @@
 
       - name: Launch the new Masters
         local_action: ec2 
-                      group=[ '{{ security_group_master }}', '{{ security_group_master }}-contextual' ]
+                      group= [ '{{ security_group_master }}', '{{ security_group_master }}-contextual' ]
                       instance_type={{ instance_type}} 
                       image={{ image }} 
                       wait=true 
@@ -289,7 +289,7 @@
           
       - name: Launch the new Nodes
         local_action: ec2 
-                      group=[ '{{ security_group_node }}', '{{ security_group_node }}-contextual' ]
+                      group= [ '{{ security_group_node }}', '{{ security_group_node }}-contextual' ]
                       instance_type={{ instance_type}} 
                       image={{ image }} 
                       wait=true 
