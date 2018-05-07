@@ -70,6 +70,8 @@
           
       - debug:
           msg: "ECR: {{ ecr_password }}"
+        tags:
+          - credentials
                 
       - name: Log into private registry
         docker_login:
