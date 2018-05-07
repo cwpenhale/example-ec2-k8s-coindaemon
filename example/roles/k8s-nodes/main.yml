@@ -1,0 +1,23 @@
+---
+  - name: Install Nodes Playbook
+    hosts: k8s-nodes
+    connection: ssh
+    gather_facts: False
+    tags: installation
+    
+    tasks:
+   
+    - atomic_container:
+        name: kube-proxy
+        image: registry.centos.org/centos/kubernetes-sig-proxy:latest
+        backend: docker
+        state: latest
+        system: True
+   
+    - atomic_container:
+        name: kubelet
+        image: registry.centos.org/centos/kubernetes-sig-kubelet:latest
+        backend: docker
+        state: latest
+        system: True
+  

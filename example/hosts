@@ -1,4 +1,6 @@
 [local]
 localhost
 
-[k8s]
+[k8s-masters]
+
+[k8s-nodes]
