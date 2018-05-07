@@ -25,6 +25,7 @@
         image: parity/parity
         state: latest
         mode: system
+        backend: ostree
         values:
           - ui-interface=all
           - jsonrpc-interface=all
