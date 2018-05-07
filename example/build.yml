@@ -44,7 +44,7 @@
       - name: Get parity sources
         git:
           repo: 'https://github.com/paritytech/parity.git'
-          dest: /home/centos/git
+          dest: /home/centos/parity
           version: v1.11.0-ci0
         tags:
           - source
@@ -82,7 +82,7 @@
       - name: Build parity and with buildargs
         become: yes
         docker_image:
-           path: /home/centos/git/parity/docker/centos/
+           path: /home/centos/parity/docker/centos/
            name: 838410721998.dkr.ecr.us-west-2.amazonaws.com/test
            tag: latest
            buildargs:
