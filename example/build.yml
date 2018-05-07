@@ -50,6 +50,7 @@
           - source
           
       - name: Start service docker, if not running
+        become: yes
         service:
           name: docker
           state: started
