@@ -430,57 +430,45 @@
           revision: latest
         tags:
           - containerupmaster
-               
-      - name: api in
-        become: yes
-        atomic_container:
-          name: kube-sig-apiserver
-          image: registry.centos.org/centos/kubernetes-apiserver:latest
-          backend: ostree
-          state: latest
-          mode: system
+          
+      - name: install kube-apiserver
+        become: yes 
+        command: atomic install --system --system-package=no --name kube-apiserver registry.centos.org/centos/kubernetes-sig-apiserver:latest
+        ignore_errors: yes
         tags:
           - containerupmaster
-          
-      - name: api up
+
+      - name: Start service kube-apiserver, if not running
         become: yes
         service:
           name: kube-apiserver
           state: started
         tags:
           - containerupmaster
-     
-      - name: kube-scheduler in
-        become: yes
-        atomic_container:
-          name: kube-scheduler
-          image: registry.centos.org/centos/kubernetes-scheduler:latest
-          backend: ostree
-          state: latest
-          mode: system
+          
+      - name: install kube-scheduler
+        become: yes 
+        command: atomic install --system --system-package=no --name kube-scheduler registry.centos.org/centos/kubernetes-sig-scheduler:latest
+        ignore_errors: yes
         tags:
           - containerupmaster
           
-      - name: kube-scheduler up
+      - name: Start service kube-scheduler, if not running
         become: yes
         service:
           name: kube-scheduler
           state: started
         tags:
           - containerupmaster
-     
-      - name: kube-controller-manager in
-        become: yes
-        atomic_container:
-          name: kube-controller-manager
-          image: registry.centos.org/centos/kubernetes-controller-manager:latest
-          backend: ostree
-          state: latest
-          mode: system
+          
+      - name: install kube-controller-manager
+        become: yes 
+        command: atomic install --system --system-package=no --name kube-controller-manager registry.centos.org/centos/kubernetes-sig-controller-manager:latest
+        ignore_errors: yes
         tags:
           - containerupmaster
           
-      - name: kube-controller-manager up
+      - name: Start service kube-controller-manager, if not running
         become: yes
         service:
           name: kube-controller-manager
@@ -488,6 +476,8 @@
         tags:
           - containerupmaster
           
+ 
+               
   - name: Install Nodes Playbook
     hosts: k8s-nodes
     connection: ssh
