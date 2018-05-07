@@ -67,6 +67,9 @@
             ecr_password: "{{ ecr_output.stdout }}"
         tags:
           - credentials
+          
+      - debug:
+          msg: "ECR: {{ ecr_password }}"
                 
       - name: Log into private registry
         docker_login:
