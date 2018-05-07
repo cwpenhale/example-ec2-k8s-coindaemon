@@ -150,26 +150,18 @@
               to_port: 22
               cidr_ip: 0.0.0.0/0
             - proto: tcp
-              ports: -1
-              group_id: "{{ security_group_node }}"
-            - proto: tcp
-              ports: -1
-              group_id: "{{ security_group_master }}"
-            - proto: udp
-              from_port: 8285
-              to_port: 8285
-              group_id: "{{ security_group_node }}"
-            - proto: tcp
               from_port: 30000
               to_port: 32767
               cidr_ip: 0.0.0.0/0
           rules_egress:
             - proto: all
               cidr_ip: 0.0.0.0/0
-        register: basic_firewall
+        register: ec2_sg_node
+        set_fact:
+          ec2_sg_node_id: ec2_sg_node.group_id
         tags:
           - aws
-    
+          
       - name: Create a the k8s-master security-group
         local_action: 
           module: ec2_group
@@ -181,27 +173,67 @@
               from_port: 22
               to_port: 22
               cidr_ip: 0.0.0.0/0
+          rules_egress:
+            - proto: all
+              cidr_ip: 0.0.0.0/0
+        register: ec2_sg_master
+        set_fact:
+          ec2_sg_master_id: ec2_sg_master.group_id
+        tags: 
+          - aws
+          
+      - name: Create a the k8s-node security-group with internode comms
+        local_action: 
+          module: ec2_group
+          name: "{{ security_group_node }}-contextual"
+          description: Security Group for k8s nodes internode
+          region: "{{ region }}"
+          rules:
             - proto: tcp
-              from_port: 443
-              to_port: 443
-              group_id: "{{ security_group_node }}"
+              ports: -1
+              group_id: "{{ ec2_sg_node_id }}"
             - proto: tcp
-              from_port: 443
-              to_port: 443
-              group_id: "{{ security_group_master }}"
-            - proto: tcp
-              from_port: 2739
-              to_port: 2380
-              group_id: "{{ security_group_master }}"
-            - proto: tcp
-              from_port: 2739
-              to_port: 2380
-              group_id: "{{ security_group_node }}"
+              ports: -1
+              group_id: "{{ ec2_sg_master_id }}"
+            - proto: udp
+              from_port: 8285
+              to_port: 8285
+              group_id: "{{ ec2_sg_node_id }}"
           rules_egress:
             - proto: all
               cidr_ip: 0.0.0.0/0
         register: basic_firewall
-        tags: 
+        tags:
+          - aws
+          
+      - name: Create a the k8s-master security-group with internode comms
+        local_action: 
+          module: ec2_group
+          name: "{{ security_group_master }}-contextual"
+          description: Security Group for k8s master internode
+          region: "{{ region }}"
+          rules:
+            - proto: tcp
+              from_port: 443
+              to_port: 443
+              group_id: "{{ ec2_sg_node_id }}"
+            - proto: tcp
+              from_port: 443
+              to_port: 443
+              group_id: "{{ ec2_sg_master_id }}"
+            - proto: tcp
+              from_port: 2739
+              to_port: 2380
+              group_id: "{{ ec2_sg_master_id }}"
+            - proto: tcp
+              from_port: 2739
+              to_port: 2380
+              group_id: "{{ ec2_sg_node_id }}"
+          rules_egress:
+            - proto: all
+              cidr_ip: 0.0.0.0/0
+        register: basic_firewall
+        tags:
           - aws
 
       - name: Launch the new Masters
