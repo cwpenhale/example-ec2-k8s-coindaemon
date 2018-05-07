@@ -7,12 +7,18 @@
     
     tasks:
     
+    - name: docker up
+      service:
+        name: docker
+        state: started
+    
     - name: etcd up
       atomic_container:
         name: etcd
         image: centos/etcd
         backend: ostree
         state: latest
+        mode: True
         values:
             - ETCD_NAME=etcd.server
     
