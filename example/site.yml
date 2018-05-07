@@ -381,6 +381,23 @@
         tags:
           - diskmaster
           
+      - name: ostree repo update
+        become: yes
+        get_url: 
+          url: https://raw.githubusercontent.com/CentOS/CentOS-Dockerfiles/master/kubernetes-sig/master/virt7-container-common-candidate.repo
+          dest: /etc/yum.repos.d/virt7-container-common-candidate.repo
+        tags:
+          - containerupmaster
+          
+      - name: ostree repo update enable
+        become: yes
+        replace:
+          path: /etc/yum.repos.d/virt7-container-common-candidate.repo
+          regexp: 'enabled=0'
+          replace: 'enabled=1'
+        tags:
+          - containerupmaster
+          
       - name: Check whether registry is edited
         command: grep -Fxq "registry.centos.org" /etc/sysconfig/docker
         register: dockerconfig_edited
@@ -417,10 +434,11 @@
       - name: api in
         become: yes
         atomic_container:
-          name: kube-apiserver
+          name: kube-sig-apiserver
           image: registry.centos.org/centos/kubernetes-sig-apiserver:latest
-          backend: docker
+          backend: ostree
           state: latest
+          mode: system
         tags:
           - containerupmaster
           
@@ -437,8 +455,9 @@
         atomic_container:
           name: kube-scheduler
           image: registry.centos.org/centos/kubernetes-sig-scheduler:latest
-          backend: docker
+          backend: ostree
           state: latest
+          mode: system
         tags:
           - containerupmaster
           
@@ -455,8 +474,9 @@
         atomic_container:
           name: kube-controller-manager
           image: registry.centos.org/centos/kubernetes-sig-controller-manager:latest
-          backend: docker
+          backend: ostree
           state: latest
+          mode: system
         tags:
           - containerupmaster
           
