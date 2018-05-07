@@ -358,6 +358,8 @@
         lvg:
           vg: atomicos
           pvs: /dev/xvda2,/dev/xvdb
+        tags:
+          - disk
     
       - name: extend storage on root
         become: yes
