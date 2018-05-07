@@ -1,5 +1,5 @@
 ---
-  - name: Build a parity docker container
+  - name: Build a parity docker image
     hosts: local
     connection: local
     gather_facts: False
@@ -43,7 +43,6 @@
           username: AWS
           password: "{{ ecr_password }}"
           tls: yes
-          tls_verify: yes
           
       - name: docker up
         service: 
