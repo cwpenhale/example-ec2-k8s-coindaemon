@@ -7,6 +7,15 @@
     
     tasks:
     
+    - atomic_container:
+      name: etcd
+      image: centos/etcd
+      backend: ostree
+      state: latest
+      system: True
+      values:
+          - ETCD_NAME=etcd.server
+    
     - name: Pull parity to the OSTree backend
       atomic_image:
         name: parity/parity
