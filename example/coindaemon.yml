@@ -7,6 +7,12 @@
     
     tasks:
     
+    - name: Pull parity to the OSTree backend
+      atomic_image:
+        name: parity/parity
+        state: latest
+        backend: docker
+    
     - name: Install Parity
       atomic_image:
           name: parity/parity
