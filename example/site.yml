@@ -373,7 +373,7 @@
     hosts: k8s-nodes
     connection: ssh
     gather_facts: False
-    tags: postinit
+    tags: postinit-nodes
     
     tasks:
     
