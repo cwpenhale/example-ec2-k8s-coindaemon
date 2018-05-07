@@ -501,6 +501,13 @@
         tags:
          - containerupmaster
          - containerupmasterclient
+      
+      - name: bash completion
+        become: yes 
+        command: kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl.sh
+        ignore_errors: yes
+        tags:
+          - bashcompletion
                
   - name: Install Nodes Playbook
     hosts: k8s-nodes
@@ -623,5 +630,12 @@
         command: rpm-ostree install kubernetes-client --reboot
         ignore_errors: yes
         tags:
+          - containerup
           - containerupnodes
-          - containerupnodesclienet
+          
+      - name: bash completion
+        become: yes 
+        command: kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl.sh
+        ignore_errors: yes
+        tags:
+          - bashcompletion
