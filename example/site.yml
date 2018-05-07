@@ -16,7 +16,7 @@
 
     tasks:
     
-      - name: install the latest version of git
+      - name: install the latest version of git 
         become: yes
         yum:
           name: git
