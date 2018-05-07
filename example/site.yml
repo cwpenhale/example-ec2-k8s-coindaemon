@@ -262,19 +262,10 @@
         tags:
           - aws
           
-      - name: debuggers
-        debug: 
-          msg: "Item is: {{ item.public_ip }}"
-        loop: "{{ ec2_masters.instances }}"
-        tags:
-          - aws
-                  
-      - name: Add the newly created Masters instance(s) to the local host group
-        lineinfile:
-          dest: "./hosts" 
-          regexp: "{{ item.public_ip }}" 
-          insertafter: "[k8s-masters]"
-          line: "{{ item.public_ip }}"
+      - name: Add new instance to masters host group
+        add_host:
+          hostname: "{{ item.public_ip }}"
+          groupname: k8s-masters
         loop: "{{ ec2_masters.instances }}"
         tags:
           - aws
@@ -313,12 +304,10 @@
         tags:
           - aws
           
-      - name: Add the newly created Nodes instance(s) to the local host group
-        lineinfile:
-          dest: "./hosts" 
-          regexp: "{{ item.public_ip }}" 
-          insertafter: "[k8s-nodes]"
-          line: "{{ item.public_ip }}"
+      - name: Add new instance to masters host group
+        add_host:
+          hostname: "{{ item.public_ip }}"
+          groupname: k8s-nodes
         loop: "{{ ec2_nodes.instances }}"
         tags:
           - aws
