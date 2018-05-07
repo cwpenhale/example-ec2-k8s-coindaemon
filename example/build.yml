@@ -10,16 +10,19 @@
     tasks:
     
       - name: install the latest version of git
+        become: yes
         yum:
           name: git
           state: latest
     
       - name: install the latest version of docker
+        become: yes
         yum:
           name: docker
           state: latest
     
       - name: install the latest version of awscli
+        become: yes
         yum:
           name: awscli
           state: latest
