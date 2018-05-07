@@ -354,6 +354,7 @@
     tasks:
     
       - name: extend vg
+        become: yes
         lvg:
           vg: atomicos
           pvs: /dev/xvda2,/dev/xvdb
@@ -420,6 +421,7 @@
     tasks:
     
       - name: extend vg
+        become: yes
         lvg:
           vg: atomicos
           pvs: /dev/xvda,/dev/xvdb2
