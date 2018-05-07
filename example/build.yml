@@ -80,9 +80,12 @@
           - credentials
                     
       - name: Build parity and with buildargs
+        become: yes
         docker_image:
            path: /home/centos/git/parity/docker/centos/
            name: 838410721998.dkr.ecr.us-west-2.amazonaws.com/test
            tag: latest
            buildargs:
              tag: paritytech/parity:v1.11.0-ci0
+        tags:
+          - build
