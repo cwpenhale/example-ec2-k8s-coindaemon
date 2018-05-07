@@ -359,7 +359,7 @@
           vg: atomicos
           pvs: /dev/xvda2,/dev/xvdb
         tags:
-          - disk
+          - diskmaster
     
       - name: extend storage on root
         become: yes
@@ -369,7 +369,7 @@
           size: 250G
           resizefs: true
         tags:
-          - disk
+          - diskmaster
           
       - name: extend storage on docker
         become: yes
@@ -379,7 +379,7 @@
           size: 250G
           resizefs: true
         tags:
-          - disk
+          - diskmaster
           
       - name: Start service docker, if not running
         become: yes
@@ -387,8 +387,14 @@
           name: docker
           state: started
         tags:
-          - containerup
-  
+          - containerupmaster
+          
+      - name: Upgrade the atomic host platform to the latest version (atomic host upgrade)
+        atomic_host:
+          revision: latest
+        tags:
+          - containerupmaster
+               
       - name: api up
         become: yes
         atomic_container:
@@ -398,7 +404,7 @@
           state: latest
           mode: system
         tags:
-          - containerup
+          - containerupmaster
      
       - name: scheduler up
         become: yes
@@ -409,7 +415,7 @@
           state: latest
           mode: system
         tags:
-          - containerup
+          - containerupmaster
      
       - name: kube controller up
         become: yes
@@ -420,7 +426,7 @@
           state: latest
           mode: system 
         tags:
-          - containerup  
+          - containerupmaster
            
   - name: Install Nodes Playbook
     hosts: k8s-nodes
