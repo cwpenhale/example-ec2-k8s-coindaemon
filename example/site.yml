@@ -333,6 +333,7 @@
             Name: k8s-nodes
         tags:
           - aws
+          
   - name: Install Masters Playbook
     hosts: k8s-masters
     connection: ssh
@@ -360,9 +361,9 @@
         image: registry.centos.org/centos/kubernetes-sig-controller-manager:latest
         backend: docker
         state: latest
-        system: True      
-    
-    - name: Install Nodes Playbook
+        system: True   
+           
+  - name: Install Nodes Playbook
     hosts: k8s-nodes
     connection: ssh
     gather_facts: False
