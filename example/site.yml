@@ -419,7 +419,7 @@
         atomic_container:
           name: kube-apiserver
           image: registry.centos.org/centos/kubernetes-sig-apiserver:latest
-          backend: ostree
+          backend: docker
           state: latest
           mode: system
         tags:
@@ -430,7 +430,7 @@
         atomic_container:
           name: kube-scheduler
           image: registry.centos.org/centos/kube-sig-scheduler:latest
-          backend: ostree
+          backend: docker
           state: latest
           mode: system
         tags:
@@ -441,7 +441,7 @@
         atomic_container:
           name: kube-controller-manager
           image: registry.centos.org/centos/kubernetes-sig-controller-manager:latest
-          backend: ostree
+          backend: docker
           state: latest
           mode: system 
         tags:
