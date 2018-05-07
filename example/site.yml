@@ -6,7 +6,8 @@
     
     vars:
       instance_type: t2.micro
-      security_group: ansible-k8s
+      security_group_master: ansible-k8s-master
+      security_group_node: ansible-k8s-node
       image: ami-a52a34dc
       keypair: cpenhale
       region: us-west-2
@@ -137,11 +138,11 @@
         tags:
           - build-docker
     
-      - name: Create a security group
+      - name: Create a the k8s-node security-group
         local_action: 
           module: ec2_group
-          name: "{{ security_group }}"
-          description: Security Group for k8s Servers
+          name: "{{ security_group_node }}"
+          description: Security Group for k8s nodes
           region: "{{ region }}"
           rules:
             - proto: tcp
@@ -149,13 +150,51 @@
               to_port: 22
               cidr_ip: 0.0.0.0/0
             - proto: tcp
-              from_port: 8584
-              to_port: 8584
+              group_id: "{{ security_group_node }}"
+            - proto: tcp
+              group_id: "{{ security_group_master }}"
+            - proto: udp
+              from_port: 8285
+              to_port: 8285
+              group_id: "{{ security_group_node }}"
+            - proto: tcp
+              from_port: 30000
+              to_port: 32767
+              cidr_ip: 0.0.0.0/0
+          rules_egress:
+            - proto: all
+              cidr_ip: 0.0.0.0/0
+        register: basic_firewall
+        tags:
+          - aws
+    
+      - name: Create a the k8s-master security-group
+        local_action: 
+          module: ec2_group
+          name: "{{ security_group_master }}"
+          description: Security Group for k8s masters
+          region: "{{ region }}"
+          rules:
+            - proto: tcp
+              from_port: 22
+              to_port: 22
               cidr_ip: 0.0.0.0/0
             - proto: tcp
-              from_port: 8545
-              to_port: 8545
-              cidr_ip: 0.0.0.0/0
+              from_port: 443
+              to_port: 443
+              group_id: "{{ security_group_node }}"
+            - proto: tcp
+              from_port: 443
+              to_port: 443
+              group_id: "{{ security_group_master }}"
+            - proto: tcp
+              from_port: 2739
+              to_port: 2380
+              group_id: "{{ security_group_master }}"
+            - proto: tcp
+              from_port: 2739
+              to_port: 2380
+              group_id: "{{ security_group_node }}"
           rules_egress:
             - proto: all
               cidr_ip: 0.0.0.0/0
