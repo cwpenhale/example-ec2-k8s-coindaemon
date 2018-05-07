@@ -263,12 +263,11 @@
           - aws
                   
       - name: Add the newly created Masters instance(s) to the local host group
-        local_action:
-          lineinfile:
-            dest: "./hosts" 
-            regexp: "{{ item.public_ip }}" 
-            insertafter: "[k8s-masters]"
-            line: "{{ item.public_ip }}"
+        lineinfile:
+          dest: "./hosts" 
+          regexp: "{{ item.public_ip }}" 
+          insertafter: "[k8s-masters]"
+          line: "{{ item.public_ip }}"
         with_items: "{{ ec2_masters.instances }}"
         tags:
           - aws
@@ -305,12 +304,11 @@
           - aws
           
       - name: Add the newly created Nodes instance(s) to the local host group
-        local_action:
-          lineinfile:
-            dest: "./hosts" 
-            regexp: "{{ item.public_ip }}" 
-            insertafter: "[k8s-nodes]"
-            line: "{{ item.public_ip }}"
+        lineinfile:
+          dest: "./hosts" 
+          regexp: "{{ item.public_ip }}" 
+          insertafter: "[k8s-nodes]"
+          line: "{{ item.public_ip }}"
         with_items: "{{ ec2_nodes.instances }}"
         tags:
           - aws
