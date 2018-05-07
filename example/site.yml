@@ -414,7 +414,7 @@
         tags:
           - containerupmaster
                
-      - name: api up
+      - name: api in
         become: yes
         atomic_container:
           name: kube-apiserver
@@ -423,18 +423,34 @@
           state: latest
         tags:
           - containerupmaster
+          
+      - name: api up
+        become: yes
+        service:
+          name: kube-apiserver
+          state: started
+        tags:
+          - containerupmaster
      
-      - name: scheduler up
+      - name: kube-scheduler in
         become: yes
         atomic_container:
           name: kube-scheduler
-          image: registry.centos.org/centos/kube-sig-scheduler:latest
+          image: registry.centos.org/centos/kubernetes-sig-scheduler:latest
           backend: docker
           state: latest
         tags:
           - containerupmaster
+          
+      - name: kube-scheduler up
+        become: yes
+        service:
+          name: kube-scheduler
+          state: started
+        tags:
+          - containerupmaster
      
-      - name: kube controller up
+      - name: kube-controller-manager in
         become: yes
         atomic_container:
           name: kube-controller-manager
@@ -443,7 +459,15 @@
           state: latest
         tags:
           - containerupmaster
-           
+          
+      - name: kube-controller-manager up
+        become: yes
+        service:
+          name: kube-controller-manager
+          state: started
+        tags:
+          - containerupmaster
+          
   - name: Install Nodes Playbook
     hosts: k8s-nodes
     connection: ssh
