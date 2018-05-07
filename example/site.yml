@@ -500,6 +500,7 @@
         ignore_errors: yes
         tags:
          - containerupmaster
+         - containerupmasterclient
                
   - name: Install Nodes Playbook
     hosts: k8s-nodes
@@ -623,3 +624,4 @@
         ignore_errors: yes
         tags:
           - containerupnodes
+          - containerupnodesclienet
