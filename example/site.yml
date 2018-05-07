@@ -356,7 +356,7 @@
       - name: extend vg
         lvg:
           vg: atomicos
-          pvs: /dev/xdva2,/dev/xdvb
+          pvs: /dev/xvda2,/dev/xvdb
     
       - name: extend storage on root
         become: yes
@@ -422,7 +422,7 @@
       - name: extend vg
         lvg:
           vg: atomicos
-          pvs: /dev/xdva,/dev/xdvb2
+          pvs: /dev/xvda,/dev/xvdb2
     
       - name: extend storage on root
         become: yes
