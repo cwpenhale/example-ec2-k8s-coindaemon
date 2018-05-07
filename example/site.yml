@@ -81,14 +81,6 @@
         tags:
           - deps
     
-      - name: install the latest version of python-pip
-        become: yes
-        yum:
-          name: python-pip
-          state: latest
-        tags:
-          - deps
-          
       - name: Get parity sources
         git:
           repo: 'https://github.com/paritytech/parity.git'
