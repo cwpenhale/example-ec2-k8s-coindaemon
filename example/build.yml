@@ -33,10 +33,10 @@
         tags:
           - deps
     
-      - name: install the latest version of docker-py
+      - name: install the latest version of python-docker-py
         become: yes
         yum:
-          name: docker-py
+          name: python-docker-py
           state: latest
         tags:
           - deps
