@@ -19,28 +19,38 @@
         yum:
           name: git
           state: latest
+        tags: 
+          build
     
       - name: install the latest version of docker
         yum:
           name: docker
           state: latest
+        tags:
+          build
     
       - name: install the latest version of awscli
         yum:
           name: awscli
           state: latest
-
+        tags:
+          build
+          
       - name: Get parity sources
         git:
           repo: 'https://github.com/paritytech/parity.git'
           dest: /home/centos/git
           version: v1.11.0-ci0
-        
+        tags:
+          build
+                  
       - name: get docker ecr creds
         command: "aws ecr get-authorization-token --region eu-west-1 --query 'authorizationData[].authorizationToken' --output text | base64 --decode | cut -d: -f2"
         set_fact:
           ecr_password: "{{ command_output.stdout }}"
-      
+        tags:
+          build
+                
       - name: Log into private registry
         docker_login:
           registry:  https://838410721998.dkr.ecr.us-west-2.amazonaws.com
@@ -48,7 +58,9 @@
           password: "{{ ecr_password }}"
           tls: yes
           tls_verify: yes
-          
+        tags:
+          build
+                    
       - name: Build parity and with buildargs
         docker_image:
            path: /home/centos/git/parity/docker/centos/
@@ -56,7 +68,9 @@
            tag: latest
            buildargs:
              tag: paritytech/parity:v1.11.0-ci0
-          
+        tags:
+          build
+                    
       - name: Create a security group
         local_action: 
           module: ec2_group
