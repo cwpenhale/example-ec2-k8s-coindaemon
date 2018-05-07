@@ -381,11 +381,29 @@
         tags:
           - diskmaster
           
+      - name: Check whether registry is edited
+        command: grep -Fxq "registry.centos.org" /etc/sysconfig/docker
+        register: dockerconfig_edited
+        check_mode: no
+        ignore_errors: yes
+        changed_when: no
+        tags:
+          - containerupmaster
+          
+      - name: edit docker registry
+        become: yes
+        lineinfile:
+          path: /etc/sysconfig/docker
+          line: "setting --add-registry registry.centos.org"
+        when: dockerconfig_edited.rc == 0
+        tags:
+          - containerupmaster
+          
       - name: Start service docker, if not running
         become: yes
         service:
           name: docker
-          state: started
+          state: reloaded
         tags:
           - containerupmaster
           
