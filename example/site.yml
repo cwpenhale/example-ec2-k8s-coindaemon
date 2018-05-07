@@ -263,7 +263,8 @@
           - aws
           
       - name: debuggers
-        debug: "{{ item }}"
+        debug: 
+          msg: "Item is: {{ item }}"
         loop: "{{ ec2_masters.instances }}"
         tags:
           - aws
