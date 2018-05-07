@@ -50,6 +50,7 @@
           - source
           
       - name: docker up
+        become: yes
         service:
           name: docker
           status: started
