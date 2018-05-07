@@ -125,7 +125,7 @@
           - credentials
           
       - name: replicate build to parity Dockfile location
-        command: "cp -R /home/centos/parity/* /home/centos/parity/docker/centos/"
+        shell: "cp -R /home/centos/parity/* /home/centos/parity/docker/centos/"
         tags: 
           - build-docker 
                     
