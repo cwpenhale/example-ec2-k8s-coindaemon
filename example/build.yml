@@ -53,6 +53,11 @@
         shell: "curl https://sh.rustup.rs -sSf | sh -s -- -y"
         tags:
           - deps
+          
+      - name: nightly rust
+        shell: "source /home/centos/.cargo/env && rustup default nightly"
+        tags:
+         - build-source
     
       - name: install the latest version of python-docker-py
         become: yes
@@ -71,7 +76,7 @@
           - source
           
       - name: build parity
-        command: chdir=/home/centos/parity ~/.cargo/bin/cargo build --release
+        shell: "source /home/centos/.cargo/env && cd /home/centos/parity && ~/.cargo/bin/cargo build --release"
         tags:
           - build-source
           
