@@ -347,21 +347,21 @@
         image: registry.centos.org/centos/kubernetes-sig-apiserver:latest
         backend: docker
         state: latest
-        system: True
+        mode: system
    
     - atomic_container:
         name: kube-scheduler
         image: registry.centos.org/centos/kube-sig-scheduler:latest
         backend: docker
         state: latest
-        system: True
+        mode: system
    
     - atomic_container:
         name: kube-controller-manager
         image: registry.centos.org/centos/kubernetes-sig-controller-manager:latest
         backend: docker
         state: latest
-        system: True   
+        mode: system   
            
   - name: Install Nodes Playbook
     hosts: k8s-nodes
@@ -376,11 +376,11 @@
         image: registry.centos.org/centos/kubernetes-sig-proxy:latest
         backend: docker
         state: latest
-        system: True
+        mode: system
    
     - atomic_container:
         name: kubelet
         image: registry.centos.org/centos/kubernetes-sig-kubelet:latest
         backend: docker
         state: latest
-        system: True        
+        mode: system        
