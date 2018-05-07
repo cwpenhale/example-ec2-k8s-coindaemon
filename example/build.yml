@@ -1,5 +1,5 @@
 ---
-  - name: Provision an EC2 Instance
+  - name: Build a parity docker container
     hosts: local
     connection: local
     gather_facts: False
@@ -34,8 +34,7 @@
           version: v1.11.0-ci0
   
       - name: get docker ecr creds
-        command: 
-          aws ecr get-authorization-token --region "{{region}}" --query 'authorizationData[].authorizationToken' --output text | base64 --decode | cut -d: -f2
+        command: "aws ecr get-authorization-token --region {{ region }} --query 'authorizationData[].authorizationToken' --output text | base64 --decode | cut -d: -f2"
         register: ecr_password
                 
       - name: Log into private registry
