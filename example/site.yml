@@ -261,6 +261,12 @@
         register: ec2_masters
         tags:
           - aws
+          
+      - name: debuggers
+        debug: "{{ item }}"
+        loop: "{{ ec2_masters.instances }}"
+        tags:
+          - aws
                   
       - name: Add the newly created Masters instance(s) to the local host group
         lineinfile:
@@ -269,7 +275,6 @@
           insertafter: "[k8s-masters]"
           line: "{{ item.public_ip }}"
         loop: "{{ ec2_masters.instances }}"
-        debug: "{{ item }}"
         tags:
           - aws
         
