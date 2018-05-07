@@ -1,0 +1,10 @@
+---
+  - name: Set Up Parity Pod
+    hosts: local
+    connection: local
+    tags: pod
+    gather_facts: False
+    
+    tasks:
+    
+      

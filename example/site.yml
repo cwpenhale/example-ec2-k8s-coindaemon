@@ -156,6 +156,10 @@
           description: Security Group for k8s nodes
           region: "{{ region }}"
           rules:
+            - proto: icmp
+              from_port: -1
+              to_port:  -1 
+              cidr_ip: 0.0.0.0/0
             - proto: tcp
               from_port: 22
               to_port: 22
@@ -183,6 +187,10 @@
           description: Security Group for k8s masters
           region: "{{ region }}"
           rules:
+            - proto: icmp
+              from_port: -1
+              to_port:  -1 
+              cidr_ip: 0.0.0.0/0
             - proto: tcp
               from_port: 22
               to_port: 22
