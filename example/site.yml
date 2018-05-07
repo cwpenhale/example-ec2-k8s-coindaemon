@@ -359,7 +359,7 @@
           vg: atomicos
           lv: docker-pool
           size: 250G
-          pvs: /dev/xdva,/dev/xdvb
+          pvs: /dev/xdva2,/dev/xdvb
           resizefs: true
         tags:
           - disk
@@ -370,7 +370,7 @@
           vg: atomicos
           lv: root
           size: 250G
-          pvs: /dev/xdva,/dev/xdvb
+          pvs: /dev/xdva2,/dev/xdvb
           resizefs: true
         tags:
           - disk
@@ -422,7 +422,7 @@
           vg: atomicos
           lv: docker-pool
           size: 250G
-          pvs: /dev/xdva,/dev/xdvb
+          pvs: /dev/xdva2,/dev/xdvb2
           resizefs: true
         tags:
           - disk
@@ -433,7 +433,7 @@
           vg: atomicos
           lv: root
           size: 250G
-          pvs: /dev/xdva,/dev/xdvb
+          pvs: /dev/xdva,/dev/xdvb2
           resizefs: true
         tags:
           - disk
