@@ -68,11 +68,6 @@
         tags:
           - credentials
           
-      - debug:
-          msg: "ECR: {{ ecr_password }}"
-        tags:
-          - credentials
-                
       - name: Log into private registry
         become: yes
         docker_login:
