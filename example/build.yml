@@ -55,15 +55,20 @@
                 
       - name: Log into private registry
         docker_login:
-          registry: 838410721998.dkr.ecr.us-west-2.amazonaws.com
+          registry_url: https://838410721998.dkr.ecr.us-west-2.amazonaws.com
           username: AWS
           password: "{{ ecr_password }}"
-          tls: yes
+          tls_verify: yes
+          reauthorize: yes
+        tags:
+          - credentials
           
       - name: docker up
         service:
           name: docker
           status: started
+        tags:
+          - deps
                     
       - name: Build parity and with buildargs
         docker_image:
