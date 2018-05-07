@@ -65,7 +65,6 @@
           
       - name: rust-up
         shell: "curl https://sh.rustup.rs -sSf | sh -s -- -y"
-        warn: False
         tags:
           - deps
           
