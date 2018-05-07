@@ -47,32 +47,6 @@
         tags:
           - deps
       
-      - name: install the latest version of libudev-devel
-        become: yes
-        yum:
-          name: libudev-devel
-          state: latest
-        tags:
-          - deps
-      
-      - name: install the 'Development tools' package group
-        become: yes
-        yum:
-          name: "@Development tools"
-          state: present
-        tags:
-          - deps
-          
-      - name: rust-up
-        shell: "curl https://sh.rustup.rs -sSf | sh -s -- -y"
-        tags:
-          - deps
-          
-      - name: nightly rust
-        shell: "source /home/centos/.cargo/env && rustup default nightly"
-        tags:
-         - build-source
-    
       - name: install the latest version of python-docker-py
         become: yes
         yum:
@@ -89,11 +63,6 @@
           update: no
         tags:
           - source
-          
-      - name: build parity
-        shell: "source /home/centos/.cargo/env && cd /home/centos/parity && ~/.cargo/bin/cargo build --release"
-        tags:
-          - build-source
           
       - name: Start service docker, if not running
         become: yes
@@ -125,7 +94,7 @@
         tags:
           - credentials
           
-      - name: replicate build to parity Dockerfile location
+      - name: replicate source to parity Dockerfile location
         shell: "rsync -r /home/centos/parity/* /home/centos/parity/docker/centos/ --exclude docker"
         tags: 
           - build-docker 
