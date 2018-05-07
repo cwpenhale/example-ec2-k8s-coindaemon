@@ -353,21 +353,13 @@
     
     tasks:
     
-      - name: add new disk to vg
-        become: yes
-        lvol:
-          vg: atomicos
-          size: 100%FREE
-          pvs: /dev/xdvb
-        tags:
-          - disk
-          
       - name: extend storage on root
         become: yes
         lvol:
           vg: atomicos
-          lv: root
+          lv: docker-pool
           size: 50%PVS
+          pvs: /dev/xdvb
           resizefs: true
         tags:
           - disk
@@ -376,8 +368,9 @@
         become: yes
         lvol:
           vg: atomicos
-          lv: docker-pool
+          lv: root
           size: 50%PVS
+          pvs: /dev/xdvb
           resizefs: true
         tags:
           - disk
@@ -423,21 +416,13 @@
     
     tasks:
     
-      - name: add new disk to vg
-        become: yes
-        lvol:
-          vg: atomicos
-          size: 100%FREE
-          pvs: /dev/xdva
-        tags:
-          - disk
-          
       - name: extend storage on root
         become: yes
         lvol:
           vg: atomicos
-          lv: root
+          lv: docker-pool
           size: 50%PVS
+          pvs: /dev/xdva
           resizefs: true
         tags:
           - disk
@@ -446,8 +431,9 @@
         become: yes
         lvol:
           vg: atomicos
-          lv: docker-pool
+          lv: root
           size: 50%PVS
+          pvs: /dev/xdva
           resizefs: true
         tags:
           - disk
