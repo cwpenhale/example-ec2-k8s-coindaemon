@@ -6,7 +6,7 @@
     gather_facts: False
     
     vars:
-      instance_type: t2.micro
+      instance_type: t2.small
       security_group_master: ansible-k8s-master
       security_group_node: ansible-k8s-node
       image: ami-a52a34dc
