@@ -268,6 +268,8 @@
                       regexp={{ item.public_ip }} 
                       insertafter="[k8s-masters]" line={{ item.public_ip }}
         with_items: "{{ ec2_masters.instances }}"
+        tags:
+          - aws
         
       - name: Wait for SSH to come up for masters
         local_action: wait_for 
