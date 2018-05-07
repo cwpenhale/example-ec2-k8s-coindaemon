@@ -12,25 +12,17 @@
         name: docker
         state: started
     
-    - name: etcd up
-      become: yes
-      atomic_container:
-        name: etcd
-        image: centos/etcd
-        backend: ostree
-        state: latest
-        mode: system
-        values:
-            - ETCD_NAME=etcd.server
-    
     - name: Pull parity to the OSTree backend
       atomic_image:
         name: parity/parity
         state: latest
         backend: ostree
     
-    - name: Install Parity
-      atomic_image:
-          name: parity/parity
-          state: latest
-          started: yes
+    - name: parity up
+      become: yes
+      atomic_container:
+        name: etcd
+        image: parity/parity
+        backend: ostree
+        state: latest
+        mode: system
