@@ -269,6 +269,7 @@
           insertafter: "[k8s-masters]"
           line: "{{ item.public_ip }}"
         loop: "{{ ec2_masters.instances }}"
+        debug: "{{ item }}"
         tags:
           - aws
         
