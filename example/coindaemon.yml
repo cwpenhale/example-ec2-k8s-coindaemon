@@ -18,11 +18,11 @@
         state: latest
         backend: docker
     
-    - name: parity image in
+    - name: parity image up
       become: yes
       atomic_container:
         name: parity
-        image: parity/parity::v1.11.0-ci0
+        image: parity/parity
         state: latest
         mode: system
         backend: ostree
