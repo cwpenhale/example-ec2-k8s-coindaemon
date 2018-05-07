@@ -59,7 +59,9 @@
   
       - name: get docker ecr creds
         shell: "aws ecr get-authorization-token --region {{ region }} --query 'authorizationData[].authorizationToken' --output text | base64 --decode | cut -d: -f2"
-        register: ecr_password
+        register: ecr_output
+        set_fact:
+          ecr_password: "{{ ecr_output.stdout }}"
         tags:
           - credentials
                 
