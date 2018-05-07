@@ -29,7 +29,7 @@
         
     - name: parity image up
       become: yes
-      atomic_container:
+      atomic_image:
         name: parity
         backend: ostree
         state: latest
