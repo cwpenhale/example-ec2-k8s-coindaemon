@@ -20,6 +20,7 @@
     
     - name: parity image in
       become: yes
+      become_user: root
       atomic_container:
         name: parity
         image: parity/parity
@@ -29,6 +30,7 @@
         
     - name: parity image up
       become: yes
+      become_user: root
       atomic_container:
         name: parity
         backend: ostree
