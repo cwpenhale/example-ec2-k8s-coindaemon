@@ -490,9 +490,9 @@
         become: yes
         lvg:
           vg: atomicos
-          pvs: /dev/xvda,/dev/xvdb2
+          pvs: /dev/xvda2,/dev/xvdb
         tags:
-          - diskmaster
+          - disknode
     
       - name: extend storage on root
         become: yes
@@ -502,7 +502,7 @@
           size: 250G
           resizefs: true
         tags:
-          - diskmaster
+          - disknode
           
       - name: extend storage on docker
         become: yes
@@ -512,7 +512,7 @@
           size: 250G
           resizefs: true
         tags:
-          - diskmaster
+          - disknode
           
       - name: ostree repo update
         become: yes
@@ -520,7 +520,7 @@
           url: https://raw.githubusercontent.com/CentOS/CentOS-Dockerfiles/master/kubernetes-sig/master/virt7-container-common-candidate.repo
           dest: /etc/yum.repos.d/virt7-container-common-candidate.repo
         tags:
-          - containerupmaster
+          - containerupnodes
           
       - name: ostree repo update enable
         become: yes
@@ -529,7 +529,7 @@
           regexp: 'enabled=0'
           replace: 'enabled=1'
         tags:
-          - containerupmaster
+          - containerupnodes
           
       - name: Check whether registry is edited
         command: grep -Fxq "registry.centos.org" /etc/sysconfig/docker
@@ -538,7 +538,7 @@
         ignore_errors: yes
         changed_when: no
         tags:
-          - containerupmaster
+          - containerupnodes
           
       - name: edit docker registry
         become: yes
@@ -547,7 +547,7 @@
           line: "setting --add-registry registry.centos.org"
         when: dockerconfig_edited.rc == 1
         tags:
-          - containerupmaster
+          - containerupnodes
           
       - name: Start service docker, if not running
         become: yes
@@ -555,21 +555,21 @@
           name: docker
           state: reloaded
         tags:
-          - containerupmaster
+          - containerupnodes
           
       - name: Upgrade the atomic host platform to the latest version (atomic host upgrade)
         become: yes
         atomic_host:
           revision: latest
         tags:
-          - containerupmaster
+          - containerupnodes
           
       - name: install kubelet
         become: yes 
         command: atomic install --system --system-package=no --name kubelet registry.centos.org/centos/kubernetes-sig-kubelet:latest
         ignore_errors: yes
         tags:
-          - containerupmaster
+          - containerupnodes
 
       - name: Start service kubelet, if not running
         become: yes
@@ -577,14 +577,14 @@
           name: kubelet
           state: started
         tags:
-          - containerupmaster
+          - containerupnodes
           
       - name: install kube-proxy
         become: yes 
         command: atomic install --system --system-package=no --name kube-proxy registry.centos.org/centos/kubernetes-sig-proxy:latest
         ignore_errors: yes
         tags:
-          - containerupmaster
+          - containerupnodes
           
       - name: Start service kube-proxy, if not running
         become: yes
@@ -592,4 +592,4 @@
           name: kube-proxy
           state: started
         tags:
-          - containerupmaster
+          - containerupnodes
