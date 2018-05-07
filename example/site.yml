@@ -268,7 +268,7 @@
           regexp: "{{ item.public_ip }}" 
           insertafter: "[k8s-masters]"
           line: "{{ item.public_ip }}"
-        with_items: "{{ ec2_masters.instances }}"
+        loop: "{{ ec2_masters.instances }}"
         tags:
           - aws
         
@@ -277,13 +277,13 @@
                       host={{ item.public_ip }} 
                       port=22 
                       state=started
-        with_items: "{{ ec2_masters.instances }}"
+        loop: "{{ ec2_masters.instances }}"
         tags:
           - aws
           
       - name: Add tag to master Instance(s)
         local_action: ec2_tag resource={{ item.id }} region={{ region }} state=present
-        with_items: "{{ ec2_masters.instances }}"
+        loop: "{{ ec2_masters.instances }}"
         args:
           tags:
             Name: k8s-masters
@@ -309,7 +309,7 @@
           regexp: "{{ item.public_ip }}" 
           insertafter: "[k8s-nodes]"
           line: "{{ item.public_ip }}"
-        with_items: "{{ ec2_nodes.instances }}"
+        loop: "{{ ec2_nodes.instances }}"
         tags:
           - aws
 
@@ -318,13 +318,13 @@
                       host={{ item.public_ip }} 
                       port=22 
                       state=started
-        with_items: "{{ ec2_nodes.instances }}"
+        loop: "{{ ec2_nodes.instances }}"
         tags:
           - aws
           
       - name: Add tag to node Instance(s)
         local_action: ec2_tag resource={{ item.id }} region={{ region }} state=present
-        with_items: "{{ ec2_nodes.instances }}"
+        loop: "{{ ec2_nodes.instances }}"
         args:
           tags:
             Name: k8s-nodes
