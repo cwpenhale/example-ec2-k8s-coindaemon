@@ -3,6 +3,7 @@
     hosts: local
     connection: local
     gather_facts: False
+    
     vars:
       instance_type: t2.micro
       security_group: ansible-k8s
@@ -122,6 +123,11 @@
           reauthorize: yes
         tags:
           - credentials
+          
+      - name: replicate build to parity Dockfile location
+        command: cp -R /home/centos/parity/* /home/centos/parity/docker/centos/
+        tags: 
+          - build-docker 
                     
       - name: Build parity and with buildargs
         become: yes
