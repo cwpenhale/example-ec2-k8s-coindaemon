@@ -308,7 +308,7 @@
           keypair: "{{ keypair }}"
           count: "{{ nodes_count }}"
           volumes:
-          - device_name: /dev/xvda
+          - device_name: /dev/xvdb
             volume_type: sc1
             volume_size: "{{disk_size}}"
             delete_on_termination: true
