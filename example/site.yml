@@ -497,7 +497,7 @@
       - name: install kube-client
         become: yes 
         command: rpm-ostree install kubernetes-client --reboot
-        async: 0
+        async: 1
         poll: 0
         ignore_errors: yes
         tags:
@@ -635,7 +635,7 @@
         become: yes 
         command: rpm-ostree install kubernetes-client --reboot
         ignore_errors: yes
-        async: 0
+        async: 1
         poll: 0
         tags:
           - containerup
