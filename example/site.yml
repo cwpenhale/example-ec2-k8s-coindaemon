@@ -435,7 +435,7 @@
         become: yes
         atomic_container:
           name: kube-sig-apiserver
-          image: registry.centos.org/centos/kubernetes-sig-apiserver:latest
+          image: registry.centos.org/centos/kubernetes-apiserver:latest
           backend: ostree
           state: latest
           mode: system
@@ -454,7 +454,7 @@
         become: yes
         atomic_container:
           name: kube-scheduler
-          image: registry.centos.org/centos/kubernetes-sig-scheduler:latest
+          image: registry.centos.org/centos/kubernetes-scheduler:latest
           backend: ostree
           state: latest
           mode: system
@@ -473,7 +473,7 @@
         become: yes
         atomic_container:
           name: kube-controller-manager
-          image: registry.centos.org/centos/kubernetes-sig-controller-manager:latest
+          image: registry.centos.org/centos/kubernetes-controller-manager:latest
           backend: ostree
           state: latest
           mode: system
