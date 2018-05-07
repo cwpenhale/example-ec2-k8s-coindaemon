@@ -80,6 +80,14 @@
           state: latest
         tags:
           - deps
+    
+      - name: install the latest version of python-pip
+        become: yes
+        yum:
+          name: python-pip
+          state: latest
+        tags:
+          - deps
           
       - name: Get parity sources
         git:
@@ -128,6 +136,13 @@
         shell: "rsync -r /home/centos/parity/* /home/centos/parity/docker/centos/ --exclude docker"
         tags: 
           - build-docker 
+          
+      - name: modify busted dockerfile from parity
+        replace:
+          path: /home/centos/parity/docker/centos/Dockerfile
+          regexp: 'file binutils'
+          replace: 'file binutils libudev-devel'
+          backup: no
                     
       - name: Build parity and with buildargs
         become: yes
@@ -163,6 +178,8 @@
             - proto: all
               cidr_ip: 0.0.0.0/0
         register: basic_firewall
+        tags:
+          - aws
 
       - name: Launch the new Masters
         local_action: ec2 
@@ -173,29 +190,35 @@
                       region={{ region }} 
                       keypair={{ keypair }}
                       count={{ masters_count }}
-        register: ec2
-        
+        register: ec2-masters
+        tags:
+          - aws
+                  
       - name: Add the newly created Masters instance(s) to the local host group
         local_action: lineinfile 
                       dest="./hosts" 
                       regexp={{ item.public_ip }} 
                       insertafter="[k8s-masters]" line={{ item.public_ip }}
-        with_items: "{{ ec2.instances }}"
+        with_items: "{{ ec2-masters.instances }}"
         
       - name: Wait for SSH to come up
         local_action: wait_for 
                       host={{ item.public_ip }} 
                       port=22 
                       state=started
-        with_items: "{{ ec2.instances }}"
-
+        with_items: "{{ ec2-masters.instances }}"
+        tags:
+          - aws
+          
       - name: Add tag to Instance(s)
         local_action: ec2_tag resource={{ item.id }} region={{ region }} state=present
-        with_items: "{{ ec2.instances }}"
+        with_items: "{{ ec2-masters.instances }}"
         args:
           tags:
             Name: k8s-masters
-
+        tags:
+          - aws
+          
       - name: Launch the new Nodes
         local_action: ec2 
                       group={{ security_group }} 
@@ -205,27 +228,35 @@
                       region={{ region }} 
                       keypair={{ keypair }}
                       count={{ nodes_count }}
-        register: ec2
-        
+        register: ec2-nodes
+        tags:
+          - aws
+          
       - name: Add the newly created Nodes instance(s) to the local host group
         local_action: lineinfile 
                       dest="./hosts" 
                       regexp={{ item.public_ip }} 
                       insertafter="[k8s-nodes]" line={{ item.public_ip }}
-        with_items: "{{ ec2.instances }}"
-
-
+        with_items: "{{ ec2-nodes.instances }}"
+        tags:
+          - aws
+        tags:
+          - aws
+          
       - name: Wait for SSH to come up
         local_action: wait_for 
                       host={{ item.public_ip }} 
                       port=22 
                       state=started
-        with_items: "{{ ec2.instances }}"
-
+        with_items: "{{ ec2-nodes.instances }}"
+        tags:
+          - aws
+          
       - name: Add tag to Instance(s)
         local_action: ec2_tag resource={{ item.id }} region={{ region }} state=present
-        with_items: "{{ ec2.instances }}"
+        with_items: "{{ ec2-nodes.instances }}"
         args:
           tags:
             Name: k8s-nodes
-           
+        tags:
+          - aws         
