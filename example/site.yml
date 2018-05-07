@@ -497,10 +497,16 @@
       - name: install kube-client
         become: yes 
         command: rpm-ostree install kubernetes-client --reboot
+        async: 0
+        poll: 0
         ignore_errors: yes
         tags:
          - containerupmaster
          - containerupmasterclient
+         
+      - name: waiting for server to come back
+        local_action: wait_for host={{ inventory_hostname }}
+                      state=started
       
       - name: bash completion
         become: yes 
@@ -629,9 +635,15 @@
         become: yes 
         command: rpm-ostree install kubernetes-client --reboot
         ignore_errors: yes
+        async: 0
+        poll: 0
         tags:
           - containerup
           - containerupnodes
+
+      - name: waiting for server to come back
+        local_action: wait_for host={{ inventory_hostname }}
+                      state=started
           
       - name: bash completion
         become: yes 
