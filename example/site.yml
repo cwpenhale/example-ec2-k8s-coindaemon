@@ -341,27 +341,33 @@
     tags: postinit
     
     tasks:
-   
-    - atomic_container:
-        name: kube-apiserver
-        image: registry.centos.org/centos/kubernetes-sig-apiserver:latest
-        backend: ostree
-        state: latest
-        mode: system
-   
-    - atomic_container:
-        name: kube-scheduler
-        image: registry.centos.org/centos/kube-sig-scheduler:latest
-        backend: ostree
-        state: latest
-        mode: system
-   
-    - atomic_container:
-        name: kube-controller-manager
-        image: registry.centos.org/centos/kubernetes-sig-controller-manager:latest
-        backend: ostree
-        state: latest
-        mode: system   
+    
+      - name: Start service docker, if not running
+        become: yes
+        service:
+          name: docker
+          state: started
+  
+      - atomic_container:
+          name: kube-apiserver
+          image: registry.centos.org/centos/kubernetes-sig-apiserver:latest
+          backend: ostree
+          state: latest
+          mode: system
+     
+      - atomic_container:
+          name: kube-scheduler
+          image: registry.centos.org/centos/kube-sig-scheduler:latest
+          backend: ostree
+          state: latest
+          mode: system
+     
+      - atomic_container:
+          name: kube-controller-manager
+          image: registry.centos.org/centos/kubernetes-sig-controller-manager:latest
+          backend: ostree
+          state: latest
+          mode: system   
            
   - name: Install Nodes Playbook
     hosts: k8s-nodes
@@ -370,17 +376,25 @@
     tags: postinit
     
     tasks:
-   
-    - atomic_container:
-        name: kube-proxy
-        image: registry.centos.org/centos/kubernetes-sig-proxy:latest
-        backend: ostree
-        state: latest
-        mode: system
-   
-    - atomic_container:
-        name: kubelet
-        image: registry.centos.org/centos/kubernetes-sig-kubelet:latest
-        backend: ostree
-        state: latest
-        mode: system        
+    
+      - name: Start service docker, if not running
+        become: yes
+        service:
+          name: docker
+          state: started
+        tags:
+          - credentials
+     
+      - atomic_container:
+          name: kube-proxy
+          image: registry.centos.org/centos/kubernetes-sig-proxy:latest
+          backend: ostree
+          state: latest
+          mode: system
+     
+      - atomic_container:
+          name: kubelet
+          image: registry.centos.org/centos/kubernetes-sig-kubelet:latest
+          backend: ostree
+          state: latest
+          mode: system        
