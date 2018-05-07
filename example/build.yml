@@ -34,7 +34,7 @@
           version: v1.11.0-ci0
   
       - name: get docker ecr creds
-        command: "aws ecr get-authorization-token --region {{ region }} --query 'authorizationData[].authorizationToken' --output text | base64 --decode | cut -d: -f2"
+        shell: "aws ecr get-authorization-token --region {{ region }} --query 'authorizationData[].authorizationToken' --output text | base64 --decode | cut -d: -f2"
         register: ecr_password
                 
       - name: Log into private registry
@@ -44,6 +44,10 @@
           password: "{{ ecr_password }}"
           tls: yes
           tls_verify: yes
+          
+      - name: docker up
+        service: 
+          
                     
       - name: Build parity and with buildargs
         docker_image:
