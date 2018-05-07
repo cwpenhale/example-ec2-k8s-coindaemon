@@ -18,7 +18,7 @@
         state: latest
         backend: ostree
     
-    - name: parity up
+    - name: parity image in
       become: yes
       atomic_container:
         name: parity
@@ -28,6 +28,7 @@
         mode: user
         
     - name: parity image up
+      become: yes
       atomic_container:
         name: parity
         backend: ostree
