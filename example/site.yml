@@ -265,7 +265,7 @@
       - name: Add new instance to masters host group
         add_host:
           hostname: "{{ item.public_ip }}"
-          groupname: k8s-masters
+          groups: k8s-masters
         loop: "{{ ec2_masters.instances }}"
         tags:
           - aws
@@ -307,7 +307,7 @@
       - name: Add new instance to masters host group
         add_host:
           hostname: "{{ item.public_ip }}"
-          groupname: k8s-nodes
+          groups: k8s-nodes
         loop: "{{ ec2_nodes.instances }}"
         tags:
           - aws
