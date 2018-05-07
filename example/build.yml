@@ -45,8 +45,9 @@
           tls: yes
           
       - name: docker up
-        service: 
-          
+        service:
+          name: docker
+          status: started
                     
       - name: Build parity and with buildargs
         docker_image:
