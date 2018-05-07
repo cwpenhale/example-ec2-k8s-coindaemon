@@ -55,7 +55,7 @@
                 
       - name: Log into private registry
         docker_login:
-          registry:  https://838410721998.dkr.ecr.us-west-2.amazonaws.com/test
+          registry: 838410721998.dkr.ecr.us-west-2.amazonaws.com/test
           username: AWS
           password: "{{ ecr_password }}"
           tls: yes
