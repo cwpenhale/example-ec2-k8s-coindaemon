@@ -273,16 +273,19 @@
           - aws
         
       - name: Wait for SSH to come up for masters
-        local_action: wait_for 
-                      host={{ item.public_ip }} 
-                      port=22 
-                      state=started
+        wait_for: 
+          host: "{{ item.public_ip }}" 
+          port: 22 
+          state: started
         loop: "{{ ec2_masters.instances }}"
         tags:
           - aws
           
       - name: Add tag to master Instance(s)
-        local_action: ec2_tag resource={{ item.id }} region={{ region }} state=present
+        ec2_tag:
+           resource: "{{ item.id }}"
+           region: "{{ region }}"
+           state: present
         loop: "{{ ec2_masters.instances }}"
         args:
           tags:
@@ -314,16 +317,19 @@
           - aws
 
       - name: Wait for SSH to come up for nodes
-        local_action: wait_for 
-                      host={{ item.public_ip }} 
-                      port=22 
-                      state=started
+        wait_for:
+          host: "{{ item.public_ip }}"
+          port: 22 
+          state: started
         loop: "{{ ec2_nodes.instances }}"
         tags:
           - aws
           
       - name: Add tag to node Instance(s)
-        local_action: ec2_tag resource={{ item.id }} region={{ region }} state=present
+        ec2_tag:
+          resource: "{{ item.id }}"
+          region: "{{ region }}"
+          state: present
         loop: "{{ ec2_nodes.instances }}"
         args:
           tags:
