@@ -137,12 +137,20 @@
         tags: 
           - build-docker 
           
+      - name: Check whether dockerfile is busted
+        command: grep -Fxq "libudev-devel" /home/centos/parity/docker/centos/Dockerfile
+        register: dockerfile_busted
+        check_mode: no
+        ignore_errors: yes
+        changed_when: no
+          
       - name: modify busted dockerfile from parity
         replace:
           path: /home/centos/parity/docker/centos/Dockerfile
           regexp: 'file binutils'
           replace: 'file binutils libudev-devel'
           backup: no
+        when: dockerfile_busted.rc == 0
         tags:
           - build-docker
                     
