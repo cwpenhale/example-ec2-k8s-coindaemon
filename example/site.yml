@@ -157,7 +157,10 @@
             - proto: all
               cidr_ip: 0.0.0.0/0
         register: ec2_sg_node
-        set_fact:
+        tags:
+          - aws
+          
+      - set_fact:
           ec2_sg_node_id: "{{ ec2_sg_node.group_id }}"
         tags:
           - aws
@@ -177,7 +180,10 @@
             - proto: all
               cidr_ip: 0.0.0.0/0
         register: ec2_sg_master
-        set_fact:
+        tags: 
+          - aws
+
+      - set_fact:
           ec2_sg_master_id: "{{ ec2_sg_master.group_id }}"
         tags: 
           - aws
