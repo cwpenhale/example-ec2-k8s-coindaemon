@@ -196,10 +196,8 @@
           region: "{{ region }}"
           rules:
             - proto: tcp
-              ports: -1
               group_id: "{{ ec2_sg_node_id }}"
             - proto: tcp
-              ports: -1
               group_id: "{{ ec2_sg_master_id }}"
             - proto: udp
               from_port: 8285
