@@ -71,7 +71,7 @@
           - source
           
       - name: build parity
-        command: cargo build --release
+        command: chdir=/home/centos/parity ~/.cargo/bin/cargo build --release
         tags:
           - build-source
           
