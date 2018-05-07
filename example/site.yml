@@ -251,11 +251,11 @@
               group_id: "{{ ec2_sg_master_id }}"
             - proto: tcp
               from_port: 2379
-              to_port: 2830
+              to_port: 2380
               group_id: "{{ ec2_sg_master_id }}"
             - proto: tcp
               from_port: 2379
-              to_port: 2830
+              to_port: 2380
               group_id: "{{ ec2_sg_node_id }}"
           rules_egress:
             - proto: all
