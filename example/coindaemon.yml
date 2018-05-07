@@ -1,8 +1,14 @@
 ---
-  - name: Install Parity
+  - name: Install Parity Playbook
     hosts: k8s
     connection: ssh
-    atomic_image:
+    gather_facts: True
+    tags: provisioning
+    
+    tasks:
+    
+    - name: Install Parity
+      atomic_image:
           name: parity/parity
           state: latest
           started: yes
