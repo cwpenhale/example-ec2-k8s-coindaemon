@@ -348,21 +348,27 @@
           name: docker
           state: started
   
-      - atomic_container:
+      - name: api up
+        become: yes
+        atomic_container:
           name: kube-apiserver
           image: registry.centos.org/centos/kubernetes-sig-apiserver:latest
           backend: ostree
           state: latest
           mode: system
      
-      - atomic_container:
+      - name: scheduler up
+        become: yes
+        atomic_container:
           name: kube-scheduler
           image: registry.centos.org/centos/kube-sig-scheduler:latest
           backend: ostree
           state: latest
           mode: system
      
-      - atomic_container:
+      - name: kube controller up
+        become: yes
+        atomic_container:
           name: kube-controller-manager
           image: registry.centos.org/centos/kubernetes-sig-controller-manager:latest
           backend: ostree
@@ -385,14 +391,18 @@
         tags:
           - credentials
      
-      - atomic_container:
+      - name: proxy up
+        become: yes
+        atomic_container:
           name: kube-proxy
           image: registry.centos.org/centos/kubernetes-sig-proxy:latest
           backend: ostree
           state: latest
           mode: system
      
-      - atomic_container:
+      - name: kubelet up
+        become: yes
+        atomic_container:
           name: kubelet
           image: registry.centos.org/centos/kubernetes-sig-kubelet:latest
           backend: ostree
