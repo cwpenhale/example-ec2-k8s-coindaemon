@@ -1,7 +1,8 @@
 ---
-    - name: Install Parity
-      hosts: k8s
-      connection: ssh
-      atomic_image:
-            name: parity/parity
-            state: latest
+  - name: Install Parity
+    hosts: k8s
+    connection: ssh
+    atomic_image:
+          name: parity/parity
+          state: latest
+          started: yes
