@@ -11,7 +11,7 @@
       atomic_image:
         name: parity/parity
         state: latest
-        backend: docker
+        backend: ostree
     
     - name: Install Parity
       atomic_image:
