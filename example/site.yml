@@ -353,13 +353,17 @@
     
     tasks:
     
+      - name: extend vg
+        lvg:
+          vg: atomicos
+          pvs: /dev/xdva2,/dev/xdvb
+    
       - name: extend storage on root
         become: yes
         lvol:
           vg: atomicos
           lv: docker-pool
           size: 250G
-          pvs: /dev/xdva2,/dev/xdvb
           resizefs: true
         tags:
           - disk
@@ -370,7 +374,6 @@
           vg: atomicos
           lv: root
           size: 250G
-          pvs: /dev/xdva2,/dev/xdvb
           resizefs: true
         tags:
           - disk
@@ -416,13 +419,17 @@
     
     tasks:
     
+      - name: extend vg
+        lvg:
+          vg: atomicos
+          pvs: /dev/xdva,/dev/xdvb2
+    
       - name: extend storage on root
         become: yes
         lvol:
           vg: atomicos
           lv: docker-pool
           size: 250G
-          pvs: /dev/xdva2,/dev/xdvb2
           resizefs: true
         tags:
           - disk
@@ -433,7 +440,6 @@
           vg: atomicos
           lv: root
           size: 250G
-          pvs: /dev/xdva,/dev/xdvb2
           resizefs: true
         tags:
           - disk
