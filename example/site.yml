@@ -314,6 +314,7 @@
             delete_on_termination: true
         register: ec2_nodes
         tags:
+          - aws
           - awsnodes
           
       - name: Add new instance to nodes host group
@@ -322,6 +323,7 @@
           groups: k8s-nodes
         loop: "{{ ec2_nodes.instances }}"
         tags:
+          - aws
           - awsnodes
 
       - name: Wait for SSH to come up for nodes
@@ -331,6 +333,7 @@
           state: started
         loop: "{{ ec2_nodes.instances }}"
         tags:
+          - aws
           - awsnodes
           
       - name: Add tag to node Instance(s)
@@ -343,6 +346,7 @@
           tags:
             Name: k8s-nodes
         tags:
+          - aws
           - awsnodes
           
   - name: Install Masters Playbook
