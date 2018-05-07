@@ -1,6 +1,7 @@
 ---
-    - name: Execute the run command on rsyslog container image (atomic run rhel7/rsyslog)
+    - name: Install Parity
       hosts: k8s
+      connection: ssh
       atomic_image:
-          name: parity/parity
-          state: latest
+            name: parity/parity
+            state: latest
