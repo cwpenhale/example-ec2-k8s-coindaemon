@@ -504,7 +504,7 @@
       
       - name: bash completion
         become: yes 
-        command: kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl.sh
+        shell: kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl.sh
         ignore_errors: yes
         tags:
           - bashcompletion
@@ -635,7 +635,7 @@
           
       - name: bash completion
         become: yes 
-        command: kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl.sh
+        shell: kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl.sh
         ignore_errors: yes
         tags:
           - bashcompletion
