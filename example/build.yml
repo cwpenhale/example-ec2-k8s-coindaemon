@@ -32,7 +32,7 @@
   
       - name: get docker ecr creds
         command:
-          aws ecr get-authorization-token --region {{region}} --query 'authorizationData[].authorizationToken' --output text | base64 --decode | cut -d: -f2
+          aws ecr get-authorization-token --region "{{region}}" --query 'authorizationData[].authorizationToken' --output text | base64 --decode | cut -d: -f2
         set_fact:
           ecr_password: "{{ command_output.stdout }}"
                 
