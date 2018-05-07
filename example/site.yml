@@ -384,6 +384,8 @@
         service:
           name: docker
           state: started
+        tags:
+          - containerup
   
       - name: api up
         become: yes
@@ -393,6 +395,8 @@
           backend: ostree
           state: latest
           mode: system
+        tags:
+          - containerup
      
       - name: scheduler up
         become: yes
@@ -402,6 +406,8 @@
           backend: ostree
           state: latest
           mode: system
+        tags:
+          - containerup
      
       - name: kube controller up
         become: yes
@@ -410,7 +416,9 @@
           image: registry.centos.org/centos/kubernetes-sig-controller-manager:latest
           backend: ostree
           state: latest
-          mode: system   
+          mode: system 
+        tags:
+          - containerup  
            
   - name: Install Nodes Playbook
     hosts: k8s-nodes
