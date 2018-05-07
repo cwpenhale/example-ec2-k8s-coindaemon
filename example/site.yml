@@ -494,7 +494,12 @@
         tags:
           - containerupmaster
           
- 
+      - name: install kube-client
+        become: yes 
+        command: rpm-ostree install kubernetes-client
+        ignore_errors: yes
+        tags:
+         - containerupmaster
                
   - name: Install Nodes Playbook
     hosts: k8s-nodes
@@ -609,5 +614,12 @@
         service:
           name: kube-proxy
           state: started
+        tags:
+          - containerupnodes
+          
+      - name: install kube-client
+        become: yes 
+        command: rpm-ostree install kubernetes-client
+        ignore_errors: yes
         tags:
           - containerupnodes
