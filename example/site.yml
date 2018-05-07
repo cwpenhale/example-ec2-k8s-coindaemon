@@ -358,7 +358,7 @@
         lvol:
           vg: atomicos
           lv: docker-pool
-          size: 50%PVS
+          size: 250
           pvs: /dev/xdvb
           resizefs: true
         tags:
@@ -369,7 +369,7 @@
         lvol:
           vg: atomicos
           lv: root
-          size: 50%PVS
+          size: 250
           pvs: /dev/xdvb
           resizefs: true
         tags:
@@ -421,7 +421,7 @@
         lvol:
           vg: atomicos
           lv: docker-pool
-          size: 50%PVS
+          size: 250
           pvs: /dev/xdva
           resizefs: true
         tags:
@@ -432,7 +432,7 @@
         lvol:
           vg: atomicos
           lv: root
-          size: 50%PVS
+          size: 250
           pvs: /dev/xdva
           resizefs: true
         tags:
