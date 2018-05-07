@@ -14,16 +14,16 @@
     
     - name: Pull parity to the OSTree backend
       atomic_image:
-        name: parity/parity
-        state: v1.11.0-ci0
+        name: parity/parity:v1.11.0-ci0
+        state: latest
         backend: docker
     
     - name: parity image in
       become: yes
       atomic_container:
         name: parity
-        image: parity/parity
-        state: v1.11.0-ci0
+        image: parity/parity:v1.11.0-ci0
+        state: latest
         mode: system
         backend: ostree
         values:
