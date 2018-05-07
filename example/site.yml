@@ -395,7 +395,7 @@
         lineinfile:
           path: /etc/sysconfig/docker
           line: "setting --add-registry registry.centos.org"
-        when: dockerconfig_edited.rc == 0
+        when: dockerconfig_edited.rc == 1
         tags:
           - containerupmaster
           
