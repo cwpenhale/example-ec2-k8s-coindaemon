@@ -32,6 +32,27 @@
           state: latest
         tags:
           - deps
+      
+      - name: install the latest version of curl
+        become: yes
+        yum:
+          name: curl
+          state: latest
+        tags:
+          - deps
+      
+      - name: install the 'Development tools' package group
+        become: yes
+        yum:
+          name: "@Development tools"
+          state: present
+        tags:
+          - deps
+          
+      - name: rust-up
+        shell: "curl https://sh.rustup.rs -sSf | sh -s -- -y"
+        tags:
+          - deps
     
       - name: install the latest version of python-docker-py
         become: yes
@@ -48,6 +69,11 @@
           version: v1.11.0-ci0
         tags:
           - source
+          
+      - name: build parity
+        command: cargo build --release
+        tags:
+          - build-source
           
       - name: Start service docker, if not running
         become: yes
@@ -88,4 +114,4 @@
            buildargs:
              tag: paritytech/parity:v1.11.0-ci0
         tags:
-          - build
+          - build-docker
