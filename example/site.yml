@@ -56,6 +56,15 @@
         tags:
           - deps
       
+      - name: install the latest version of python-boto
+        become: yes
+        yum:
+          name: python-boto
+          state: latest
+        tags:
+          - deps
+    
+      
       - name: install the latest version of python-boto3
         become: yes
         yum:
