@@ -14,7 +14,7 @@
     
     - name: Pull parity to the OSTree backend
       atomic_image:
-        name: parity/rust-centos:stable
+        name: parity/rust-centos
         state: latest
         backend: docker
     
@@ -22,7 +22,7 @@
       become: yes
       atomic_container:
         name: parity
-        image: parity/rust-centos:stable
+        image: parity/rust-centos
         state: latest
         mode: system
         backend: ostree
