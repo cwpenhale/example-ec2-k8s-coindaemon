@@ -14,7 +14,7 @@
       region: us-west-2
       masters_count: 3
       nodes_count: 2
-      disk_size: 100
+      disk_size: 500
 
     tasks:
     
@@ -261,8 +261,8 @@
           keypair: "{{ keypair }}"
           count: "{{ masters_count }}"
           volumes:
-          - device_name: /dev/sda1
-            volume_type: standard
+          - device_name: /dev/xvdb
+            volume_type: sc1
             volume_size: "{{disk_size}}"
             delete_on_termination: true
         register: ec2_masters
@@ -353,6 +353,35 @@
     
     tasks:
     
+      - name: add new disk to vg
+        become: yes
+        lvol:
+          vg: atomicos
+          size: 100%FREE
+          pvs: /dev/xdvb
+        tags:
+          - disk
+          
+      - name: extend storage on root
+        become: yes
+        lvol:
+          vg: atomicos
+          lv: root
+          size: 50%PVS
+          resizefs: true
+        tags:
+          - disk
+          
+      - name: extend storage on docker
+        become: yes
+        lvol:
+          vg: atomicos
+          lv: docker-pool
+          size: 50%PVS
+          resizefs: true
+        tags:
+          - disk
+          
       - name: Start service docker, if not running
         become: yes
         service:
@@ -393,6 +422,35 @@
     tags: postinit-nodes
     
     tasks:
+    
+      - name: add new disk to vg
+        become: yes
+        lvol:
+          vg: atomicos
+          size: 100%FREE
+          pvs: /dev/xdva
+        tags:
+          - disk
+          
+      - name: extend storage on root
+        become: yes
+        lvol:
+          vg: atomicos
+          lv: root
+          size: 50%PVS
+          resizefs: true
+        tags:
+          - disk
+          
+      - name: extend storage on docker
+        become: yes
+        lvol:
+          vg: atomicos
+          lv: docker-pool
+          size: 50%PVS
+          resizefs: true
+        tags:
+          - disk
     
       - name: Start service docker, if not running
         become: yes
