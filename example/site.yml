@@ -1,7 +1,8 @@
 ---
-  - name: Provision an EC2 Instance
+  - name: Set Up Cloud
     hosts: local
     connection: local
+    tags: localinit
     gather_facts: False
     
     vars:
@@ -331,4 +332,54 @@
           tags:
             Name: k8s-nodes
         tags:
-          - aws         
+          - aws
+  - name: Install Masters Playbook
+    hosts: k8s-masters
+    connection: ssh
+    gather_facts: False
+    tags: postinit
+    
+    tasks:
+   
+    - atomic_container:
+        name: kube-apiserver
+        image: registry.centos.org/centos/kubernetes-sig-apiserver:latest
+        backend: docker
+        state: latest
+        system: True
+   
+    - atomic_container:
+        name: kube-scheduler
+        image: registry.centos.org/centos/kube-sig-scheduler:latest
+        backend: docker
+        state: latest
+        system: True
+   
+    - atomic_container:
+        name: kube-controller-manager
+        image: registry.centos.org/centos/kubernetes-sig-controller-manager:latest
+        backend: docker
+        state: latest
+        system: True      
+    
+    - name: Install Nodes Playbook
+    hosts: k8s-nodes
+    connection: ssh
+    gather_facts: False
+    tags: postinit
+    
+    tasks:
+   
+    - atomic_container:
+        name: kube-proxy
+        image: registry.centos.org/centos/kubernetes-sig-proxy:latest
+        backend: docker
+        state: latest
+        system: True
+   
+    - atomic_container:
+        name: kubelet
+        image: registry.centos.org/centos/kubernetes-sig-kubelet:latest
+        backend: docker
+        state: latest
+        system: True        
