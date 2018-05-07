@@ -2,8 +2,8 @@
   - name: Install Parity Playbook
     hosts: k8s
     connection: ssh
-    gather_facts: True
-    tags: provisioning
+    gather_facts: False
+    tags: installation
     
     tasks:
     
@@ -16,22 +16,15 @@
       atomic_image:
         name: parity/parity
         state: latest
-        backend: ostree
+        backend: docker
     
     - name: parity image in
       become: yes
       atomic_container:
         name: parity
         image: parity/parity
-        backend: ostree
         state: latest
         mode: system
-        
-    - name: parity image up
-      become: yes
-      atomic_image:
-        name: parity
-        backend: ostree
-        state: latest
-        started: yes
-        
+        values:
+          - ui-interface=all
+          - jsonrpc-interface=all
