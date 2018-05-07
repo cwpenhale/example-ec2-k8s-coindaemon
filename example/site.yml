@@ -264,7 +264,7 @@
           
       - name: debuggers
         debug: 
-          msg: "Item is: {{ item }}"
+          msg: "Item is: {{ item.public_ip }}"
         loop: "{{ ec2_masters.instances }}"
         tags:
           - aws
