@@ -421,7 +421,6 @@
           image: registry.centos.org/centos/kubernetes-sig-apiserver:latest
           backend: docker
           state: latest
-          mode: system
         tags:
           - containerupmaster
      
@@ -432,7 +431,6 @@
           image: registry.centos.org/centos/kube-sig-scheduler:latest
           backend: docker
           state: latest
-          mode: system
         tags:
           - containerupmaster
      
@@ -443,7 +441,6 @@
           image: registry.centos.org/centos/kubernetes-sig-controller-manager:latest
           backend: docker
           state: latest
-          mode: system 
         tags:
           - containerupmaster
            
