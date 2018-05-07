@@ -21,8 +21,17 @@
     - name: parity up
       become: yes
       atomic_container:
-        name: etcd
+        name: parity
         image: parity/parity
         backend: ostree
         state: latest
-        mode: system
+        mode: user
+        
+    - name: parity image up
+      become: yes
+      atomic_container:
+        name: parity
+        backend: ostree
+        state: latest
+        started: yes
+        
