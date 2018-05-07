@@ -74,6 +74,7 @@
           - credentials
                 
       - name: Log into private registry
+        become: yes
         docker_login:
           registry_url: https://838410721998.dkr.ecr.us-west-2.amazonaws.com
           username: AWS
