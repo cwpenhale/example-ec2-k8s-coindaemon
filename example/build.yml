@@ -14,24 +14,40 @@
         yum:
           name: git
           state: latest
+        tags:
+          - deps
     
       - name: install the latest version of docker
         become: yes
         yum:
           name: docker
           state: latest
+        tags:
+          - deps
     
       - name: install the latest version of awscli
         become: yes
         yum:
           name: awscli
           state: latest
-
+        tags:
+          - deps
+    
+      - name: install the latest version of docker-py
+        become: yes
+        yum:
+          name: docker-py
+          state: latest
+        tags:
+          - deps
+          
       - name: Get parity sources
         git:
           repo: 'https://github.com/paritytech/parity.git'
           dest: /home/centos/git
           version: v1.11.0-ci0
+        tags:
+          - source
   
       - name: get docker ecr creds
         shell: "aws ecr get-authorization-token --region {{ region }} --query 'authorizationData[].authorizationToken' --output text | base64 --decode | cut -d: -f2"
