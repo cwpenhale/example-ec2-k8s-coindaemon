@@ -18,7 +18,7 @@
         image: centos/etcd
         backend: ostree
         state: latest
-        mode: True
+        mode: system
         values:
             - ETCD_NAME=etcd.server
     
