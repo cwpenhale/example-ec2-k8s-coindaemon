@@ -33,8 +33,7 @@
       - name: get docker ecr creds
         command: 
           aws ecr get-authorization-token --region "{{region}}" --query 'authorizationData[].authorizationToken' --output text | base64 --decode | cut -d: -f2
-        set_fact:
-          ecr_password: "{{ command_output.stdout }}"
+        register: ecr_password
                 
       - name: Log into private registry
         docker_login:
