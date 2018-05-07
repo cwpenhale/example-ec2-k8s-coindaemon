@@ -48,6 +48,13 @@
           version: v1.11.0-ci0
         tags:
           - source
+          
+      - name: docker up
+        service:
+          name: docker
+          status: started
+        tags:
+          - credentials
   
       - name: get docker ecr creds
         shell: "aws ecr get-authorization-token --region {{ region }} --query 'authorizationData[].authorizationToken' --output text | base64 --decode | cut -d: -f2"
@@ -64,13 +71,6 @@
           reauthorize: yes
         tags:
           - credentials
-          
-      - name: docker up
-        service:
-          name: docker
-          status: started
-        tags:
-          - deps
                     
       - name: Build parity and with buildargs
         docker_image:
