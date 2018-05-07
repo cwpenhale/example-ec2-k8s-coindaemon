@@ -9,7 +9,7 @@
     
     - atomic_container:
         name: etcd
-        image: rhel/etcd
+        image: centos/etcd
         backend: ostree
         state: latest
         system: True
