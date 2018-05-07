@@ -11,8 +11,8 @@
       image: ami-a52a34dc
       keypair: cpenhale
       region: us-west-2
-      master_count: 3
-      node_count: 2
+      masters_count: 3
+      nodes_count: 2
 
     tasks:
     
