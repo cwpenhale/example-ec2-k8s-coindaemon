@@ -173,11 +173,13 @@
               cidr_ip: 0.0.0.0/0
         register: ec2_sg_node
         tags:
+          - firewall
           - aws
           
       - set_fact:
           ec2_sg_node_id: "{{ ec2_sg_node.group_id }}"
         tags:
+          - firewall
           - aws
           
       - name: Create a the k8s-master security-group
@@ -200,11 +202,13 @@
               cidr_ip: 0.0.0.0/0
         register: ec2_sg_master
         tags: 
+          - firewall
           - aws
 
       - set_fact:
           ec2_sg_master_id: "{{ ec2_sg_master.group_id }}"
         tags: 
+          - firewall 
           - aws
           
       - name: Create a the k8s-node security-group with internode comms
@@ -227,6 +231,7 @@
               cidr_ip: 0.0.0.0/0
         register: ec2_sg_node_contextual
         tags:
+          - firewall
           - aws
           
       - name: Create a the k8s-master security-group with internode comms
@@ -257,6 +262,7 @@
               cidr_ip: 0.0.0.0/0
         register: ec2_sg_master_contextual
         tags:
+          - firewall
           - aws
 
       - name: Launch the new Masters
