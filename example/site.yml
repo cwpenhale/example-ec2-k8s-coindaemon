@@ -496,7 +496,7 @@
           
       - name: install kube-client
         become: yes 
-        command: rpm-ostree install kubernetes-client
+        command: rpm-ostree install kubernetes-client --reboot
         ignore_errors: yes
         tags:
          - containerupmaster
@@ -619,7 +619,7 @@
           
       - name: install kube-client
         become: yes 
-        command: rpm-ostree install kubernetes-client
+        command: rpm-ostree install kubernetes-client --reboot
         ignore_errors: yes
         tags:
           - containerupnodes
