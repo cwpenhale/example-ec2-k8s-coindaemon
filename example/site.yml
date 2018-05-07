@@ -195,9 +195,9 @@
           description: Security Group for k8s nodes internode
           region: "{{ region }}"
           rules:
-            - proto: tcp
+            - proto: all
               group_id: "{{ ec2_sg_node_id }}"
-            - proto: tcp
+            - proto: all
               group_id: "{{ ec2_sg_master_id }}"
             - proto: udp
               from_port: 8285
