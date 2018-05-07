@@ -124,8 +124,8 @@
         tags:
           - credentials
           
-      - name: replicate build to parity Dockfile location
-        shell: "cp -R /home/centos/parity/* /home/centos/parity/docker/centos/"
+      - name: replicate build to parity Dockerfile location
+        shell: "rsync -r /home/centos/parity/* /home/centos/parity/docker/centos/ --exclude docker"
         tags: 
           - build-docker 
                     
