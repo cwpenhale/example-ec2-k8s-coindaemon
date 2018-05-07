@@ -150,10 +150,10 @@
               to_port: 22
               cidr_ip: 0.0.0.0/0
             - proto: tcp
-              ports: all
+              ports: -1
               group_id: "{{ security_group_node }}"
             - proto: tcp
-              ports: all
+              ports: -1
               group_id: "{{ security_group_master }}"
             - proto: udp
               from_port: 8285
