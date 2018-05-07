@@ -14,7 +14,7 @@
       region: us-west-2
       masters_count: 3
       nodes_count: 2
-      disk_size: 500
+      disk_size: 100
 
     tasks:
     
@@ -261,8 +261,8 @@
           keypair: "{{ keypair }}"
           count: "{{ masters_count }}"
           volumes:
-          - device_name: /dev/xvdb
-            volume_type: sc1
+          - device_name: /dev/sda1
+            volume_type: standard
             volume_size: "{{disk_size}}"
             delete_on_termination: true
         register: ec2_masters
