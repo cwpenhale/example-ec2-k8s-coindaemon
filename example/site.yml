@@ -345,21 +345,21 @@
     - atomic_container:
         name: kube-apiserver
         image: registry.centos.org/centos/kubernetes-sig-apiserver:latest
-        backend: docker
+        backend: ostree
         state: latest
         mode: system
    
     - atomic_container:
         name: kube-scheduler
         image: registry.centos.org/centos/kube-sig-scheduler:latest
-        backend: docker
+        backend: ostree
         state: latest
         mode: system
    
     - atomic_container:
         name: kube-controller-manager
         image: registry.centos.org/centos/kubernetes-sig-controller-manager:latest
-        backend: docker
+        backend: ostree
         state: latest
         mode: system   
            
@@ -374,13 +374,13 @@
     - atomic_container:
         name: kube-proxy
         image: registry.centos.org/centos/kubernetes-sig-proxy:latest
-        backend: docker
+        backend: ostree
         state: latest
         mode: system
    
     - atomic_container:
         name: kubelet
         image: registry.centos.org/centos/kubernetes-sig-kubelet:latest
-        backend: docker
+        backend: ostree
         state: latest
         mode: system        
