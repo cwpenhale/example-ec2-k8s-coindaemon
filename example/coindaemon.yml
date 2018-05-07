@@ -1,0 +1,6 @@
+---
+    - name: Execute the run command on rsyslog container image (atomic run rhel7/rsyslog)
+      hosts: k8s
+      atomic_image:
+          name: parity/parity
+          state: latest
