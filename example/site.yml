@@ -250,14 +250,15 @@
           - aws
 
       - name: Launch the new Masters
-        local_action: ec2 
-                      group= [ '{{ security_group_master }}', '{{ security_group_master }}-contextual' ]
-                      instance_type={{ instance_type}} 
-                      image={{ image }} 
-                      wait=true 
-                      region={{ region }} 
-                      keypair={{ keypair }}
-                      count={{ masters_count }}
+        local_action:
+          ec2: 
+            group: [ '{{ security_group_master }}', '{{ security_group_master }}-contextual' ]
+            instance_type: "{{ instance_type}}" 
+            image: "{{ image }}" 
+            wait: True 
+            region: "{{ region }}"
+            keypair: "{{ keypair }}"
+            count: "{{ masters_count }}"
         register: ec2-masters
         tags:
           - aws
@@ -288,14 +289,15 @@
           - aws
           
       - name: Launch the new Nodes
-        local_action: ec2 
-                      group= [ '{{ security_group_node }}', '{{ security_group_node }}-contextual' ]
-                      instance_type={{ instance_type}} 
-                      image={{ image }} 
-                      wait=true 
-                      region={{ region }} 
-                      keypair={{ keypair }}
-                      count={{ nodes_count }}
+        local_action:
+          ec2:
+            group: [ '{{ security_group_node }}', '{{ security_group_node }}-contextual' ]
+            instance_type: "{{ instance_type}}" 
+            image: "{{ image }}" 
+            wait: True 
+            region: "{{ region }}"
+            keypair: "{{ keypair }}"
+            count: "{{ nodes_count }}"
         register: ec2-nodes
         tags:
           - aws
