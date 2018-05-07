@@ -54,6 +54,14 @@
           state: latest
         tags:
           - deps
+      
+      - name: install the latest version of python-boto3
+        become: yes
+        yum:
+          name: python-boto3
+          state: latest
+        tags:
+          - deps
     
       - name: Get parity sources
         git:
@@ -105,6 +113,8 @@
         check_mode: no
         ignore_errors: yes
         changed_when: no
+        tags:
+          - build-docker
           
       - name: modify busted dockerfile from parity
         replace:
