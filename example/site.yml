@@ -507,14 +507,19 @@
       - name: waiting for server to come back
         local_action: wait_for host={{ inventory_hostname }}
                       state=started
-      
+        tags:
+         - containerupmaster
+         - containerupmasterclient
+         
       - name: bash completion
         become: yes 
         shell: kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl.sh
         ignore_errors: yes
         tags:
           - bashcompletion
-               
+          - containerupmaster
+          - containerupmasterclient
+         
   - name: Install Nodes Playbook
     hosts: k8s-nodes
     connection: ssh
@@ -644,10 +649,15 @@
       - name: waiting for server to come back
         local_action: wait_for host={{ inventory_hostname }}
                       state=started
+        tags:
+          - containerup
+          - containerupnodes
           
       - name: bash completion
         become: yes 
         shell: kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl.sh
         ignore_errors: yes
         tags:
+          - containerup
+          - containerupnodes
           - bashcompletion
